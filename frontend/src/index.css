@@ -1,0 +1,512 @@
+/* ==========================================================================
+   SMS-MH-AVIE FINAL-PROD — Liquid Glass Design System (Mobile + Desktop)
+   index.css
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ──────────────────────────────────────────────────── */
+:root {
+  --cyan:     #00F0FF;
+  --mint:     #00F5A0;
+  --amber:    #FFB020;
+  --surface:  rgba(18, 24, 38, 0.55);
+  --border:   rgba(255, 255, 255, 0.08);
+  --border-hi: rgba(255, 255, 255, 0.14);
+  --bg:       #07090E;
+  --text:     #DCE2EE;
+  --muted:    #4A5568;
+}
+
+/* ── Base Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', ui-sans-serif, system-ui;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── Liquid Glass Card ──────────────────────────────────────────────────────── */
+.glass-card {
+  position: relative;
+  background: var(--surface);
+  backdrop-filter: blur(40px) saturate(200%) brightness(105%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(105%);
+  border: 1px solid var(--border);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.18),
+    0 20px 40px -15px rgba(0, 0, 0, 0.65);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Specular cursor-tracking radial highlight */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    180px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.055),
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glass-card > * { position: relative; z-index: 1; }
+
+.glass-card:hover {
+  border-color: var(--border-hi);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    0 24px 48px -18px rgba(0, 0, 0, 0.75);
+}
+
+/* High-priority glass (drawers, modals) */
+.glass-hi {
+  background: rgba(12, 18, 32, 0.88);
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  border: 1px solid var(--border-hi);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 32px 80px -20px rgba(0, 0, 0, 0.85);
+}
+
+/* ── Section Label ──────────────────────────────────────────────────────────── */
+.section-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Tactile Sliders ────────────────────────────────────────────────────────── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cyan);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.55), 0 0 0 2px rgba(0, 240, 255, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.70), 0 0 0 3px rgba(0, 240, 255, 0.2);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cyan);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.55);
+}
+
+/* Mint-colored slider variant */
+input[type='range'].slider-mint::-webkit-slider-thumb {
+  background: var(--mint);
+  box-shadow: 0 0 10px rgba(0, 245, 160, 0.55), 0 0 0 2px rgba(0, 245, 160, 0.15);
+}
+
+input[type='range'].slider-amber::-webkit-slider-thumb {
+  background: var(--amber);
+  box-shadow: 0 0 10px rgba(255, 176, 32, 0.55), 0 0 0 2px rgba(255, 176, 32, 0.15);
+}
+
+/* ── Number Inputs ──────────────────────────────────────────────────────────── */
+.glass-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 7px 10px;
+  color: var(--text);
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.glass-input:focus {
+  border-color: rgba(0, 240, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.08);
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  opacity: 0.35;
+}
+
+/* ── Scrollbars ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.13); }
+
+/* ── Connection Badge Ping ──────────────────────────────────────────────────── */
+@keyframes statusPing {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 245, 160, 0.6); }
+  50%       { opacity: 0.6; box-shadow: 0 0 0 5px rgba(0, 245, 160, 0); }
+}
+
+.status-dot-connected {
+  animation: statusPing 2.4s ease-in-out infinite;
+}
+
+/* ── Genie Drawer Keyframes ─────────────────────────────────────────────────── */
+/* Used as fallback; Framer Motion handles the primary animation */
+@keyframes genieExpand {
+  from {
+    opacity: 0;
+    transform: translateY(100%) scaleY(0.85);
+    clip-path: inset(100% 10% 0% 10% round 24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    clip-path: inset(0% 0% 0% 0% round 0px);
+  }
+}
+
+@keyframes genieCollapse {
+  from {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    clip-path: inset(0% 0% 0% 0% round 0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%) scaleY(0.85);
+    clip-path: inset(100% 10% 0% 10% round 24px);
+  }
+}
+
+.drawer-open  { animation: genieExpand   450ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.drawer-close { animation: genieCollapse 380ms cubic-bezier(0.55, 0, 1, 0.45) both; }
+
+/* ── Micro-animations ───────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 25%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+/* ── Pill / Badge ───────────────────────────────────────────────────────────── */
+.pill-cyan {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pill-mint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(0, 245, 160, 0.08);
+  border: 1px solid rgba(0, 245, 160, 0.25);
+  color: var(--mint);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pill-amber {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 176, 32, 0.08);
+  border: 1px solid rgba(255, 176, 32, 0.25);
+  color: var(--amber);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── Tab Bar ────────────────────────────────────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+.tab-item {
+  flex: 1;
+  padding: 7px 0;
+  border-radius: 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.tab-item.active {
+  background: rgba(0, 240, 255, 0.10);
+  border-color: rgba(0, 240, 255, 0.28);
+  color: var(--cyan);
+}
+
+.tab-item:hover:not(.active) {
+  color: rgba(220, 226, 238, 0.7);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ── Calendar Day Cell ──────────────────────────────────────────────────────── */
+.cal-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.12s ease;
+  cursor: default;
+}
+
+.cal-cell.has-slots {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--border);
+}
+
+.cal-cell.has-slots:hover {
+  background: rgba(0, 240, 255, 0.05);
+  border-color: rgba(0, 240, 255, 0.22);
+}
+
+.cal-cell.present {
+  background: rgba(0, 245, 160, 0.10);
+  border-color: rgba(0, 245, 160, 0.25);
+}
+
+.cal-cell.absent {
+  background: rgba(255, 176, 32, 0.08);
+  border-color: rgba(255, 176, 32, 0.20);
+}
+
+.cal-cell.selected {
+  border-color: rgba(0, 240, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.18);
+}
+
+/* ── SVG Gauge gradient helper ──────────────────────────────────────────────── */
+.gauge-glow {
+  filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.40));
+}
+
+/* ==========================================================================
+   MOBILE-FIRST RESPONSIVE ADDITIONS
+   ========================================================================== */
+
+/* ── Touch target enforcement (Apple HIG: ≥44×44px) ────────────────────────── */
+button, [role="button"], input[type="button"], input[type="submit"],
+input[type="file"] + label, .touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Exceptions: icon-only or tiny contextual buttons explicitly opt out */
+.touch-xs {
+  min-height: unset;
+  min-width: unset;
+}
+
+/* ── Inertial momentum scrolling (iOS native feel) ──────────────────────────── */
+.scroll-inertial {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ── Safe-area insets for notched phones ────────────────────────────────────── */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 16px);
+}
+
+/* ── Bottom sheet (drawer override on mobile <768px) ────────────────────────── */
+.bottom-sheet-mobile {
+  border-radius: 28px 28px 0 0;
+  max-height: 90vh;
+}
+
+@media (max-width: 767px) {
+  /* Drawer fills full width on mobile, no side margin */
+  .drawer-container {
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Calendar: smaller day numbers */
+  .cal-cell span { font-size: 9px; }
+
+  /* Tab bar: smaller text */
+  .tab-item { font-size: 10.5px; padding: 8px 0; }
+
+  /* Hero gauge: scale down slightly */
+  .hero-gauge-wrap { transform: scale(0.88); transform-origin: top center; }
+
+  /* Section label: tighten spacing */
+  .section-label { margin-bottom: 8px; }
+
+  /* Glass cards: reduce padding */
+  .glass-card { border-radius: 16px; }
+}
+
+/* ── Camera capture button ──────────────────────────────────────────────────── */
+.camera-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  border: 1px solid rgba(0, 240, 255, 0.30);
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--cyan);
+}
+
+.camera-btn:hover {
+  background: rgba(0, 240, 255, 0.14);
+  border-color: rgba(0, 240, 255, 0.50);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.18);
+}
+
+.camera-btn:active {
+  transform: scale(0.97);
+}
+
+.file-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(220, 226, 238, 0.7);
+}
+
+.file-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(220, 226, 238, 1);
+}
+
+/* ── Responsive roster grid ─────────────────────────────────────────────────── */
+@media (max-width: 479px) {
+  /* Very small phones: roster avatars wrap cleanly */
+  .roster-strip { flex-wrap: wrap; gap: 8px; }
+  .roster-strip .student-name { display: none; }
+}
+
+/* ── Tab bar mobile: equal-width items, no truncation ───────────────────────── */
+@media (max-width: 639px) {
+  .tab-item { font-size: 10px; padding: 8px 4px; }
+  .tab-bar   { gap: 2px; padding: 3px; }
+}
+
+/* ── OCR dropzone: stack camera/file buttons vertically on mobile ───────────── */
+@media (max-width: 479px) {
+  .ocr-btn-row { flex-direction: column; }
+  .camera-btn, .file-btn { width: 100%; }
+}
+
+/* ── Number inputs on mobile: prevent zoom (font-size ≥16px) ───────────────── */
+@media (max-width: 767px) {
+  input[type='number'],
+  input[type='text'],
+  input[type='email'] {
+    font-size: 16px !important;   /* Prevents iOS auto-zoom on focus */
+  }
+}
+
+/* ── Prescription track cards: full-width on mobile ────────────────────────── */
+@media (max-width: 767px) {
+  .track-action-grid { grid-template-columns: 1fr !important; }
+}

@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    volumes:
+      - sms_data:/app/data
+      - sms_models:/app/data/models
+      - sms_exports:/app/exports
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  frontend:
+    build: ./frontend
+    ports: ["80:80"]
+    depends_on: [backend]
+
+volumes:
+  sms_data:
+  sms_models:
+  sms_exports:
